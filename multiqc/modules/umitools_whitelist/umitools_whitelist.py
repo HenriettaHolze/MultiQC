@@ -60,6 +60,12 @@ class MultiqcModule(BaseMultiqcModule):
         # # write data to the general statistics table
         # self.umitools_general_stats_table()
 
+        self.add_section(
+            name="Whitelisted cell barcodes",
+            anchor="umitools_whitelist_cbs",
+            description="This plot shows the number of whitelisted cell barcodes.",
+            plot=self.umitools_whitelist_cbs_barplot(),
+        )
         # # add a section with a deduplicated reads plot to the report
         # self.add_section(
         #     name="Deduplicated Reads",
@@ -196,20 +202,11 @@ class MultiqcModule(BaseMultiqcModule):
 
         pconfig = {"id": "umitools_whitelist_cbs_barplot", "title": "UMI-tools: Whitelisted cell barcodes", "ylab": "Counts"}
 
-        # We just use all categories. If a report is generated with a mixture
-        # of SE and PE data then this means quite a lot of categories.
-        # Usually, only a single data type is used though - in that case
-        # any categories with 0 across all samples will be ignored.
         cats = OrderedDict()
         cats["selected_cbs"] = {"name": "Whitelisted cell barcodes"}
         cats["filtered_cbs"] = {"name": "Filtered cell barcodes"}
 
-        self.add_section(
-            name="Whitelisted cell barcodes",
-            anchor="umitools_whitelist_cbs",
-            description="This plot shows the number of whitelisted cell barcodes.",
-            plot=bargraph.plot(self.umitools_data, cats, pconfig),
-        )
+        return bargraph.plot(self.umitools_data, cats, pconfig)
 
     # def umitools_deduplication_plot(self):
     #     """Generate a plot the read deduplication rates for the main report"""
