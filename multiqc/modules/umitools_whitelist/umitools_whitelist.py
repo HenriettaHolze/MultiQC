@@ -104,9 +104,9 @@ class MultiqcModule(BaseMultiqcModule):
         regexes = {
             "total_cbs": r"INFO Found (\d+) unique cell barcodes",
             "selected_cbs": r"INFO Top (\d+) cell barcodes passed the selected threshold",
-            "total_reads": r"INFO Parsed (\d+) reads",
-            "reads_matching_pattern": r"INFO (\d+) reads matched the barcode pattern",
-            "reads_matching_cbs": r"INFO (\d+) total reads matching the selected cell barcodes",
+            # "total_parsed_reads": r"INFO Parsed (\d+) reads",
+            # "reads_matching_pattern": r"INFO (\d+) reads matched the barcode pattern",
+            # "reads_matching_cbs": r"INFO (\d+) total reads matching the selected cell barcodes",
 
             # "total_umis": r"INFO total_umis (\d+)",
             # "unique_umis": r"INFO #umis (\d+)",
@@ -122,12 +122,16 @@ class MultiqcModule(BaseMultiqcModule):
                 data[key] = float(re_matches.group(1))
 
         # calculate a few simple supplementary stats
+        # try:
+        #     data["reads_not_matching_pattern"] = data["total_parsed_reads"] - data["reads_matching_pattern"]
+        # except (KeyError, ZeroDivisionError):
+        #     pass
+        # try:
+        #     data["reads_not_matching_cbs"] = data["reads_matching_pattern"] - data["reads_matching_cbs"]
+        # except (KeyError, ZeroDivisionError):
+        #     pass
         try:
-            data["reads_not_matching_pattern"] = data["total_reads"] - data["reads_matching_pattern"]
-        except (KeyError, ZeroDivisionError):
-            pass
-        try:
-            data["reads_not_matching_cbs"] = data["reads_matching_pattern"] - data["reads_matching_cbs"]
+            data["filtered_cbs"] = data["total_cbs"] - data["selected_cbs"]
         except (KeyError, ZeroDivisionError):
             pass
 
@@ -166,25 +170,45 @@ class MultiqcModule(BaseMultiqcModule):
     #     self.general_stats_addcols(self.umitools_data, headers)
 
 
-    def umitools_whitelist_reads_barplot(self):
+    # def umitools_whitelist_reads_barplot(self):
+    #     """Bar plot showing proportion of reads trimmed"""
+
+    #     pconfig = {"id": "umitools_whitelist_reads_barplot", "title": "UMI-tools: Filtered Reads", "ylab": "Counts"}
+
+    #     # We just use all categories. If a report is generated with a mixture
+    #     # of SE and PE data then this means quite a lot of categories.
+    #     # Usually, only a single data type is used though - in that case
+    #     # any categories with 0 across all samples will be ignored.
+    #     cats = OrderedDict()
+    #     cats["reads_matching_cbs"] = {"name": "Reads matching selected cell barcodes"}
+    #     cats["reads_not_matching_cbs"] = {"name": "Reads not matching selected cell barcodes"}
+    #     cats["reads_not_matching_pattern"] = {"name": "Reads not matching barcode pattern"}
+
+    #     self.add_section(
+    #         name="Reads matching whitelisted cell barcodes",
+    #         anchor="umitools_whitelist_reads",
+    #         description="This plot shows the number of reads matching the barcode pattern and the whitelisted cell barcodes.",
+    #         plot=bargraph.plot(self.cutadapt_data, cats, pconfig),
+    #     )
+
+    def umitools_whitelist_cbs_barplot(self):
         """Bar plot showing proportion of reads trimmed"""
 
-        pconfig = {"id": "umitools_whitelist_reads_barplot", "title": "UMI-tools: Filtered Reads", "ylab": "Counts"}
+        pconfig = {"id": "umitools_whitelist_cbs_barplot", "title": "UMI-tools: Whitelisted cell barcodes", "ylab": "Counts"}
 
         # We just use all categories. If a report is generated with a mixture
         # of SE and PE data then this means quite a lot of categories.
         # Usually, only a single data type is used though - in that case
         # any categories with 0 across all samples will be ignored.
         cats = OrderedDict()
-        cats["reads_matching_cbs"] = {"name": "Reads matching selected cell barcodes"}
-        cats["reads_not_matching_cbs"] = {"name": "Reads not matching selected cell barcodes"}
-        cats["reads_not_matching_pattern"] = {"name": "Reads not matching barcode pattern"}
+        cats["selected_cbs"] = {"name": "Whitelisted cell barcodes"}
+        cats["filtered_cbs"] = {"name": "Filtered cell barcodes"}
 
         self.add_section(
-            name="Reads matching whitelisted cell barcodes",
-            anchor="umitools_whitelist_reads",
-            description="This plot shows the number of reads matching the barcode pattern and the whitelisted cell barcodes.",
-            plot=bargraph.plot(self.cutadapt_data, cats, pconfig),
+            name="Whitelisted cell barcodes",
+            anchor="umitools_whitelist_cbs",
+            description="This plot shows the number of whitelisted cell barcodes.",
+            plot=bargraph.plot(self.umitools_data, cats, pconfig),
         )
 
     # def umitools_deduplication_plot(self):
