@@ -196,6 +196,7 @@ setup(
             "umitools = multiqc.modules.umitools:MultiqcModule",
             "umitools_whitelist = multiqc.modules.umitools_whitelist:MultiqcModule",
             "umitools_extract = multiqc.modules.umitools_extract:MultiqcModule",
+            "umitools_count = multiqc.modules.umitools_count:MultiqcModule",
             "varscan2 = multiqc.modules.varscan2:MultiqcModule",
             "vcftools = multiqc.modules.vcftools:MultiqcModule",
             "vep = multiqc.modules.vep:MultiqcModule",

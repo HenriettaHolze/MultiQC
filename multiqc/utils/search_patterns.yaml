@@ -828,6 +828,9 @@ umitools_whitelist:
 umitools_extract:
   contents: "# UMI-tools version:"
   num_lines: 3
+umitools_count:
+  contents: "# UMI-tools version:"
+  num_lines: 3
 varscan2/mpileup2snp:
   contents: "Only SNPs will be reported"
   num_lines: 3

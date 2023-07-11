@@ -653,6 +653,9 @@ module_order:
       module_tag:
         - RNA
         - virus
+  - umitools_count:
+      module_tag:
+        - RNA
   # Pre-alignment QC
   - humid:
       module_tag:
