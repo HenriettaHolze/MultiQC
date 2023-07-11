@@ -30,7 +30,7 @@ class MultiqcModule(BaseMultiqcModule):
 
         # Find and load any umitools log files
         self.umitools_data = dict()
-        for f in self.find_log_files("umitools"):
+        for f in self.find_log_files("umitools_extract"):
             # Parse the log file for sample name and statistics
             input_fname, data = self.parse_logs(f)
             if data and len(data) > 1:
