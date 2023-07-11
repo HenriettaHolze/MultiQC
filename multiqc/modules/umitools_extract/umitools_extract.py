@@ -55,7 +55,7 @@ class MultiqcModule(BaseMultiqcModule):
         log.info("Found {} reports".format(len(self.umitools_data)))
 
         # Write parsed report data to a file
-        self.write_data_file(self.umitools_data, "multiqc_umitools")
+        self.write_data_file(self.umitools_data, "multiqc_umitools_extract")
 
         # write data to the general statistics table
         self.umitools_extract_general_stats_table()
@@ -121,7 +121,7 @@ class MultiqcModule(BaseMultiqcModule):
         }
         self.general_stats_addcols(self.umitools_data, headers)
 
-    def umitools_extraction_plot(self):
+    def umitools_extraction_barplot(self):
         """Generate a plot with the extracted reads"""
 
         # Specify the order of the different possible categories
