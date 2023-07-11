@@ -580,6 +580,9 @@ module_order:
       module_tag:
         - DNA
         - RNA
+  - umitools_whitelist:
+      module_tag:
+        - RNA
 
   # Alignment tool stats
   - bbmap:
