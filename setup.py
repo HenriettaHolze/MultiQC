@@ -195,6 +195,7 @@ setup(
             "trimmomatic = multiqc.modules.trimmomatic:MultiqcModule",
             "umitools = multiqc.modules.umitools:MultiqcModule",
             "umitools_whitelist = multiqc.modules.umitools_whitelist:MultiqcModule",
+            "umitools_extract = multiqc.modules.umitools_extract:MultiqcModule",
             "varscan2 = multiqc.modules.varscan2:MultiqcModule",
             "vcftools = multiqc.modules.vcftools:MultiqcModule",
             "vep = multiqc.modules.vep:MultiqcModule",

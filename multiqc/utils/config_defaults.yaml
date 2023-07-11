@@ -821,3 +821,6 @@ module_order:
   - umitools_whitelist:
       module_tag:
         - RNA
+  - umitools_extract:
+      module_tag:
+        - RNA
