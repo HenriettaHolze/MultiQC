@@ -90,7 +90,7 @@ class MultiqcModule(BaseMultiqcModule):
         # Search for values using regular expressions
         regexes = {
             "input_reads": r"INFO Input Reads: (\d+)",
-            "counted_reads": r"INFO Number of (post deduplication) reads counted: (\d+)",
+            "counted_reads": r"INFO Number of \(post deduplication\) reads counted: (\d+)",
         }
         for key, regex in regexes.items():
             re_matches = re.search(regex, f["f"])
@@ -129,7 +129,7 @@ class MultiqcModule(BaseMultiqcModule):
 
         # Specify the order of the different possible categories
         keys = OrderedDict()
-        keys["output_reads"] = {"color": "#7fc97f", "name": "Reads counted"}
+        keys["counted_reads"] = {"color": "#7fc97f", "name": "Reads counted"}
         keys["collapsed_reads"] = {"color": "#fdc086", "name": "Reads collapsed"}
 
         # Config for the plot
